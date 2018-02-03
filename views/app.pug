@@ -46,22 +46,21 @@ block content
             //get device orientation
             deviceOrient(function(req1){
                 console.log(req1);
+            });
 
-                document.getElementById('tiltLR').innerHTML = req1.alpha;
-                document.getElementById('tiltFB').innerHTML = req1.beta;
-                document.getElementById('direction').innerHTML = req1.gamma;
+             //getLocation
+            getDeviceLoc(function(req2){
+                var latt = req2.coords.latitude;
+                var long = req2.coords.longitude;
 
-                //getLocation
-                getDeviceLoc(function(req2){
-                    var latt = req2.coords.latitude;
-                    var long = req2.coords.longitude;
+                var getGamma =  document.getElementById('direction').value;
+                console.log(getGamma);
 
-                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${req1.alpha}`;
+                var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getGamma}`;
 
-                    //console.log(reqURL)
-                    //- //request data
-                    requestData(reqURL);
-                });
+                console.log(reqURL)
+                //- //request data
+                requestData(reqURL);
             });
         };
 
@@ -106,6 +105,10 @@ block content
                     var curralpha = Math.round(event.alpha);
                     var currbeta  = Math.round(event.beta);
                     var currgamma = Math.round(event.gamma);
+
+                    document.getElementById('tiltLR').innerHTML = curralpha;
+                    document.getElementById('tiltFB').innerHTML = currbeta;
+                    document.getElementById('direction').value = currgamma;
 
                     orientation = {
                         alpha: curralpha,
@@ -179,7 +182,7 @@ block content
                 var data = JSON.parse(res);
                 console.log(data.result)
                 console.log(data.result.formatted_address)
-
+                
 
                 location_txt.innerHTML = "Location: "+data.result.formatted_address;
                 place_txt.innerHTML = "<b>Name: "+data.result.name + '</b>';
