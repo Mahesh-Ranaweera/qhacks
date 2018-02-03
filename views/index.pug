@@ -25,11 +25,15 @@ block content
     script.
 
         function deviceOrientationListener(event){
+            var curralpha = Math.round(event.alpha);
+            var currbeta  = Math.round(event.beta);
+            var currgamma = Math.round(event.gamma);
+
             /**Converting deg ot rad*/
             /**alpha z axis, beta x axis, gamma y axis*/
-            var alphaRadian = (event.alpha)*(Math.PI / 180);
-            var betaRadian  = (event.beta)*(Math.PI / 180);
-            var gammaRadian = (event.gamma)*(Math.PI / 180); 
+            var alphaRadian = curralpha*(Math.PI / 180);
+            var betaRadian  = currbeta*(Math.PI / 180);
+            var gammaRadian = currgamma*(Math.PI / 180); 
 
             // Calculate equation components
             var cA = Math.cos(alphaRad);
