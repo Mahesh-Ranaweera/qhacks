@@ -2,24 +2,23 @@ extends layout
 
 block content
 
-    //- #tiltLR
-    //-     | nodata
-
-    //- #tiltFB
-    //-     | nodata
-
-    //- #direction
-    //-     | nodata
-
-    //- #compassH
-    //-     | nodata
-
-
     //-overlay
     //-.drawing-overlay
     .display-info-container
         .uk-card.uk-card-body
             | Location: #{location}
+
+            #tiltLR
+                | nodata
+
+            #tiltFB
+                | nodata
+
+            #direction
+                | nodata
+
+            #compassH
+                | nodata
 
     //-camera
     .video-container
@@ -69,7 +68,6 @@ block content
         function getStream (type) {
             if (!navigator.getUserMedia && !navigator.webkitGetUserMedia &&
                 !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
-                alert('');
                 return;
             }
 
@@ -89,19 +87,36 @@ block content
             });
         }
 
+        /**Get the device orientation*/
         function deviceOrientationListener(event){
             /**alpha z axis, beta x axis, gamma y axis*/
             var curralpha = Math.round(event.alpha);
             var currbeta  = Math.round(event.beta);
             var currgamma = Math.round(event.gamma);
 
-            //- document.getElementById('tiltLR').innerHTML = curralpha;
-            //- document.getElementById('tiltFB').innerHTML = currbeta;
-            //- document.getElementById('direction').innerHTML = currgamma;
+            document.getElementById('tiltLR').innerHTML = curralpha;
+            document.getElementById('tiltFB').innerHTML = currbeta;
+            document.getElementById('direction').innerHTML = currgamma;
         }
 
         if(window.DeviceOrientationEvent){
             window.addEventListener("deviceorientation", deviceOrientationListener);
         }else{
-            alert("error not supported");
+            console.log('Device not support for device orientation');
+        }
+
+        /**Get the geolocation */
+        function getCoordinates(location){
+            var lat = location.coords.latitude
+            var long= location.coords.longitude;
+
+            console.log('Lat: '+lat+', Long: '+long);
+        }
+
+        if('geolocation' in navigator){
+            navigator.geolocation.getCurrentPosition(function(location){
+                getCoordinates(location);
+            })
+        }else{
+            console.log('Geolocation not supported');
         }
