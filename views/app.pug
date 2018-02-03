@@ -6,7 +6,8 @@ block content
     //-.drawing-overlay
     .display-info-container
         .uk-card.uk-card-body
-            | Location: #{location}
+            #location
+            #place
 
             #tiltLR
                 | nodata
@@ -28,30 +29,38 @@ block content
 
 
     script.
+        var location_txt = document.getElementById('location');
+
         /**initialize the background size**/
         window.onload = setup();
         
+
         function setup(){
-            //setup the canvas 
-            setupCanvas();
+            var orientation = {
+                alpha: 0,
+                beta : 0,
+                gamma: 0
+            }
 
             //start streaming service
             startStream();
+
+            //get device orientation
+            deviceOrient(function(req1){
+                console.log(req1);
+                //getLocation
+                getDeviceLoc(function(req2){
+                    console.log()
+                    var latt = req2.coords.latitude;
+                    var long = req2.coords.longitude;
+
+                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${orientation.alpha}`;
+
+                    //- //request data
+                    requestData(reqURL);
+                });
+            });
         };
-
-        function setupCanvas(){
-            var canvas = document.getElementById('canvas');
-            var video = document.getElementById('video');
-            divWidth = window.innerWidth;
-            divHeight = window.innerHeight;
-
-            console.log(divWidth, divHeight)
-
-            canvas.style.width, video.style.width = divWidth;
-            canvas.style.height, video.style.height = divHeight;
-
-            console.log(canvas.style.width, canvas.style.height)
-        }
 
         function startStream(){
             getStream ('video');
@@ -97,26 +106,74 @@ block content
             document.getElementById('tiltLR').innerHTML = curralpha;
             document.getElementById('tiltFB').innerHTML = currbeta;
             document.getElementById('direction').innerHTML = currgamma;
+
+            orientation = {
+                alpha: curralpha,
+                beta : currbeta,
+                gamma: currgamma
+            }
         }
 
-        if(window.DeviceOrientationEvent){
-            window.addEventListener("deviceorientation", deviceOrientationListener);
-        }else{
-            console.log('Device not support for device orientation');
+        function deviceOrient(callback){
+            if(window.DeviceOrientationEvent){
+                window.addEventListener("deviceorientation", deviceOrientationListener);
+                callback();
+            }else{
+                console.log('Device not support for device orientation');
+            }
         }
 
         /**Get the geolocation */
         function getCoordinates(location){
-            var lat = location.coords.latitude
+            var latt = location.coords.latitude
             var long= location.coords.longitude;
 
-            console.log('Lat: '+lat+', Long: '+long);
+            console.log('Lat: '+latt+', Long: '+long);
+            
+            location = {
+                long : long,
+                latt : latt
+            }
         }
 
-        if('geolocation' in navigator){
-            navigator.geolocation.getCurrentPosition(function(location){
-                getCoordinates(location);
-            })
-        }else{
-            console.log('Geolocation not supported');
+        function getDeviceLoc(callback){
+            if('geolocation' in navigator){
+                navigator.geolocation.getCurrentPosition(function(location){
+                    getCoordinates(location);
+                    callback(location);
+                })
+            }else{
+                console.log('Geolocation not supported');
+            }
         }
+
+        function requestData(reqURL){
+
+            /**Request the location data through stdlib API */
+            var requestLocData = function(){
+                this.get = function(URL, callback){
+                    var request = new XMLHttpRequest();
+                    request.onreadystatechange = function(){
+                        if(request.readyState == 4 && request.status == 200){
+                            //console.log(request.responseText);
+                            callback(request.responseText);
+                        }
+                    }
+
+                    request.open("GET", URL, true);
+                    request.send(null);
+                }
+            }
+
+            //request the data
+            var locData = new requestLocData();
+            locData.get(reqURL, function(res){
+                var data = JSON.parse(res);
+                console.log(data.result)
+
+                location_txt.innerHTML = "Location: "+data.result.formatted_address;
+            });
+        }
+
+
+       
