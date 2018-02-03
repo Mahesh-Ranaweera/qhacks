@@ -26,9 +26,9 @@ block content
     script.
 
         function deviceOrientationListener(event){
-            var curralpha = event.alpha;
-            var currbeta  = event.beta;
-            var currgamma = event.gamma;
+            var curralpha = Math.round(event.alpha);
+            var currbeta  = Math.round(event.beta);
+            var currgamma = Math.round(event.gamma);
 
             /**Converting deg ot rad*/
             /**alpha z axis, beta x axis, gamma y axis*/
