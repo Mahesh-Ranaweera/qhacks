@@ -1,6 +1,7 @@
 body {
-    padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -23,6 +24,50 @@ a {
     box-sizing: border-box;
 }
 
+.video-container {
+    margin: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+video {
+    background-color: black;
+    background-position: center center;
+    background-size: contain;
+    height: 100vh;
+}
+
 #canvas {
     display: none;
+    background-color: black;
+    background-position: center center;
+    background-size: contain;
+}
+
+#video,
+#canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    #video,
+    #canvas {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    #video,
+    #canvas {
+        width: 100%;
+        height: auto;
+    }
 }
