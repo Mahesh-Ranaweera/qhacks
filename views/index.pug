@@ -57,9 +57,9 @@ block content
             // Convert radians to degrees
             compassHeading *= 180 / Math.PI;
 
-            document.getElementById('tiltLR').innerHTML = Math.round(event.alpha);
-            document.getElementById('tiltFB').innerHTML = Math.round(event.beta);
-            document.getElementById('direction').innerHTML = Math.round(event.gamma);
+            document.getElementById('tiltLR').innerHTML = alphaRadian;
+            document.getElementById('tiltFB').innerHTML = betaRadian;
+            document.getElementById('direction').innerHTML = gammaRadian;
             document.getElementById('compassH').innerHTML = compassHeading;
         }
 
