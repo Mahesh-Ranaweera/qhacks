@@ -18,7 +18,6 @@ block content
     //-camera test
     .video-container
         video#video(width="100%" height="100%" autoplay)
-        input(type="file" accept="image/*;capture=camera")
 
     canvas#canvas(width="800" height="480")
 
@@ -64,7 +63,7 @@ block content
         function getStream (type) {
             if (!navigator.getUserMedia && !navigator.webkitGetUserMedia &&
                 !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
-                alert('User Media API not supported.');
+                alert('');
                 return;
             }
 
