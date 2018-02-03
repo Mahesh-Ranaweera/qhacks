@@ -31,14 +31,14 @@ block content
 
         /**initialize the background size**/
         window.onload = setup();
+
+        function Orientation { ; }
+        Orientation.alpha = 0;
+        Orientation.beta = 0;
+        Orientation.gamma = 0;
         
 
         function setup(){
-            var orientation = {
-                alpha: 0,
-                beta : 0,
-                gamma: 0
-            }
 
             //start streaming service
             startStream();
@@ -52,7 +52,7 @@ block content
                     var latt = req2.coords.latitude;
                     var long = req2.coords.longitude;
 
-                    var getAlpha = orientation.alpha;
+                    var getAlpha = Orientation.alpha;
                     console.log(getAlpha);
 
                     var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getAlpha}`;
@@ -111,12 +111,9 @@ block content
                     document.getElementById('tiltFB').innerHTML = currbeta;
                     //document.getElementById('direction').value = currgamma;
 
-                    orientation = {
-                        alpha: curralpha,
-                        beta : currbeta,
-                        gamma: currgamma
-                    }
-
+                    Orientation.alpha = curralpha;
+                    Orientation.beta = currbeta;
+                    Orientation.gamma = currgamma;
                     handleOrientationEvent(curralpha, currbeta, currgamma);
                 }, true);
             }else{
@@ -124,11 +121,9 @@ block content
             }
 
             var handleOrientationEvent = function(curralpha, currbeta, currgamma) {
-                orientation = {
-                        alpha: curralpha,
-                        beta : currbeta,
-                        gamma: currgamma
-                }
+                Orientation.alpha = curralpha;
+                Orientation.beta = currbeta;
+                Orientation.gamma = currgamma;
             };
         }
 
