@@ -26,11 +26,34 @@ a {
 
 .video-container {
     margin: auto;
-    position: fixed;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
+}
+
+.drawing-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+    height: 100vh;
+    z-index: 10000;
+}
+
+.display-info-container {
+    width: 100%;
+    height: auto;
+    float: left;
+    position: inherit;
+    margin-bottom: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
 }
 
 video {
