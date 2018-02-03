@@ -13,6 +13,8 @@ block content
     #direction
         | nodata
 
+    #compassH
+
 
     //-camera test
     video#video(width="640" height="480" autoplay)
@@ -23,9 +25,42 @@ block content
     script.
 
         function deviceOrientationListener(event){
+            /**Converting deg ot rad*/
+            /**alpha z axis, beta x axis, gamma y axis*/
+            var alphaRadian = event.alpha*(Math.PI / 180);
+            var betaRadian  = event.beta*(Math.PI / 180);
+            var gammaRadian = event.gamma*(Math.PI / 180); 
+
+            // Calculate equation components
+            var cA = Math.cos(alphaRad);
+            var sA = Math.sin(alphaRad);
+            var cB = Math.cos(betaRad);
+            var sB = Math.sin(betaRad);
+            var cG = Math.cos(gammaRad);
+            var sG = Math.sin(gammaRad);
+
+            // Calculate A, B, C rotation components
+            var rA = - cA * sG - sA * sB * cG;
+            var rB = - sA * sG + cA * sB * cG;
+            var rC = - cB * cG;
+
+            // Calculate compass heading
+            var compassHeading = Math.atan(rA / rB);
+
+            // Convert from half unit circle to whole unit circle
+            if(rB < 0) {
+                compassHeading += Math.PI;
+            }else if(rA < 0) {
+                compassHeading += 2 * Math.PI;
+            }
+
+            // Convert radians to degrees
+            compassHeading *= 180 / Math.PI;
+
             document.getElementById('tiltLR').innerHTML = Math.round(event.alpha);
             document.getElementById('tiltFB').innerHTML = Math.round(event.beta);
             document.getElementById('direction').innerHTML = Math.round(event.gamma);
+            document.getElementById('compassH').innerHTML = compassHeading;
         }
 
         if(window.DeviceOrientationEvent){
