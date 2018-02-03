@@ -41,7 +41,7 @@ video {
 }
 
 #canvas {
-    display: none;
+    /**display: none;*/
     background-color: black;
     background-position: center center;
     background-size: contain;
