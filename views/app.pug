@@ -1,10 +1,8 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
 
-     #tiltLR
+    #tiltLR
         | nodata
 
     #tiltFB
@@ -24,6 +22,32 @@ block content
 
 
     script.
+        /**initialize the background size**/
+        windows.onload = function(){
+            //setup the canvas 
+            setupCanvas();
+
+            //start streaming service
+            startStream();
+        };
+
+        function setupCanvas(){
+            var canvas = document.getElementById('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function startStream(){
+            var video = document.getElementById('video');
+
+            //-request access to camera
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                });
+            }
+        }
 
         function deviceOrientationListener(event){
             /**alpha z axis, beta x axis, gamma y axis*/
@@ -40,16 +64,4 @@ block content
             window.addEventListener("deviceorientation", deviceOrientationListener);
         }else{
             alert("error not supported");
-        }
-
-
-        var video = document.getElementById('video');
-
-        // Get access to the camera!
-        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            // Not adding `{ audio: true }` since we only want video now
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                video.src = window.URL.createObjectURL(stream);
-                video.play();
-            });
         }
