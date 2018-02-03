@@ -11,14 +11,15 @@ block content
             #place
             #location
 
-            #tiltLR
-                | nodata
+            //-Test points
+            //- #tiltLR
+            //-     | nodata
 
-            #tiltFB
-                | nodata
+            //- #tiltFB
+            //-     | nodata
 
-            #direction
-                | nodata
+            //- #direction
+            //-     | nodata
 
 
     #more-info(uk-modal)
@@ -65,7 +66,7 @@ block content
                     console.log(getAlpha);
 
                     var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getAlpha}`;
-                    document.getElementById('direction').innerHTML = `${latt}; ${long}; ${getAlpha}`;
+                    //-document.getElementById('direction').innerHTML = `${latt}; ${long}; ${getAlpha}`;
 
                     console.log(reqURL)
                     //- //request data
@@ -116,9 +117,10 @@ block content
                     var currbeta  = Math.round(event.beta);
                     var currgamma = Math.round(event.gamma);
 
-                    document.getElementById('tiltLR').innerHTML = curralpha;
-                    document.getElementById('tiltFB').innerHTML = currbeta;
-                    document.getElementById('direction').value = currgamma;
+                    //-Test Point
+                    //- document.getElementById('tiltLR').innerHTML = curralpha;
+                    //- document.getElementById('tiltFB').innerHTML = currbeta;
+                    //- document.getElementById('direction').value = currgamma;
 
                     Orientation.alpha = curralpha;
                     Orientation.beta = currbeta;
@@ -186,52 +188,52 @@ block content
                 var data = JSON.parse(res);
 
                 if(data != null){
-                    console.log(data.result)
-                    console.log(data.result.formatted_address)
+                    //-console.log(data.result)
+                    //-console.log(data.result.formatted_address)
                     
 
                     location_txt.innerHTML = "Location: "+data.result.formatted_address;
                     place_txt.innerHTML = "<b>Name: "+data.result.name + '</b>';
 
-                    place_txt.innerHTML += "";
+                    more_txt.innerHTML += "";
 
                     //more information content
                     if(data.result.opening_hours != null)
-                        place_txt.innerHTML += "<p>OPEN NOW: "+data.result.opening_hours.open_now+"</p><br>";
+                        more_txt.innerHTML += "<p>OPEN NOW: "+data.result.opening_hours.open_now+"</p><br>";
 
                     if(data.result.price_level != null)
 
                         switch(data.result.price_level){
                             case 0:
-                                place_txt.innerHTML += "<p>PRICE LEVEL: FREE</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: FREE</p><br>";
                                 break;
 
                             case 1:
-                                place_txt.innerHTML += "<p>PRICE LEVEL: Inexpensive</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Inexpensive</p><br>";
                                 break;
 
                             case 2:
-                                place_txt.innerHTML += "<p>PRICE LEVEL: Moderate</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Moderate</p><br>";
                                 break;
                             
                             case 3:
-                                place_txt.innerHTML += "<p>PRICE LEVEL: Expensive</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Expensive</p><br>";
                                 break;
 
                             case 4:
-                                place_txt.innerHTML += "<p>PRICE LEVEL: Very Expensive</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Very Expensive</p><br>";
                                 break;
 
                             default:
-                                place_txt.innerHTML += "<p>PRICE LEVEL: NO DATA AVAILABLE</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: NO DATA AVAILABLE</p><br>";
                                 
                         }
 
                     if(data.result.rating != null){
-                        place_txt.innerHTML += "<p>RATING: "+data.result.rating+"</p><br>";
+                        more_txt.innerHTML += "<p>RATING: "+data.result.rating+"</p><br>";
                     }
                 }else{
-                    place_txt.innerHTML = "FAILED TO RETRIEVE LOCATION DATA";
+                    more_txt.innerHTML = "FAILED TO RETRIEVE LOCATION DATA";
                 }
             });
         }
