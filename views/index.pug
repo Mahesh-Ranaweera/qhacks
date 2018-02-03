@@ -27,9 +27,9 @@ block content
         function deviceOrientationListener(event){
             /**Converting deg ot rad*/
             /**alpha z axis, beta x axis, gamma y axis*/
-            var alphaRadian = event.alpha*(Math.PI / 180);
-            var betaRadian  = event.beta*(Math.PI / 180);
-            var gammaRadian = event.gamma*(Math.PI / 180); 
+            var alphaRadian = (event.alpha)*(Math.PI / 180);
+            var betaRadian  = (event.beta)*(Math.PI / 180);
+            var gammaRadian = (event.gamma)*(Math.PI / 180); 
 
             // Calculate equation components
             var cA = Math.cos(alphaRad);
