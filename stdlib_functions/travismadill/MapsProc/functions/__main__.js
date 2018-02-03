@@ -4,7 +4,7 @@ const lib = require('lib');
 const request = require('request')
 
 var apiKey = 'AIzaSyAg9XLgcTbHCBxlMAKlQWTi_t_DowldU_g';
-var angleTolerance = 5.0;
+var angleTolerance = 15.0;
 
 /** Extend Number object with method to convert numeric degrees to radians */
 if (Number.prototype.toRadians === undefined) {
@@ -17,7 +17,7 @@ if (Number.prototype.toDegrees === undefined) {
 }
 
 /**
-* A basic Hello World function
+* Tries to give the most fitting location based on your current device's location and compass heading.
 * @param {number} lat GPS latitude
 * @param {number} lng GPS longitude
 * @param {number} heading Compass heading
@@ -37,7 +37,7 @@ module.exports = (lat = 0.0, lng = 0.0, heading = 0, context, callback) => {
 		let placeList = []
 		for(let i = 0; i < reslist.results.length; i++){ //Build selection list
 			let dLatR = reslist.results[i].geometry.location.lat.toRadians();
-			let dLngR = reslist.results[i].geometry.location.lat.toRadians();
+			let dLngR = reslist.results[i].geometry.location.lng.toRadians();
 			let latDiff = dLatR - oLatR;
 			let lngDiff = dLngR - oLngR;
 
@@ -51,8 +51,8 @@ module.exports = (lat = 0.0, lng = 0.0, heading = 0, context, callback) => {
 			//Angle
 			let y = Math.sin(lngDiff) * Math.cos(dLatR);
 			let x = Math.cos(oLatR) * Math.sin(dLatR)
-				- Math.sin(oLatR) * Math.cos(dLatR) * Math.cos(dLngR);
-			let angle = (Math.atan2(y, x)+360)%360;
+				- Math.sin(oLatR) * Math.cos(dLatR) * Math.cos(lngDiff);
+			let angle = (Math.atan2(y, x).toDegrees()+360)%360;
 
 			placeList.push({
 				place_id: reslist.results[i].place_id,
@@ -64,11 +64,14 @@ module.exports = (lat = 0.0, lng = 0.0, heading = 0, context, callback) => {
 		//Determine best from list
 		let best = 0;
 		for(let index = 1; index < placeList.length; index++){
-			if(heading-angleTolerance < placeList[index].angle < heading+angleTolerance){
-				if(placeList[index].distance > placeList[best].distance || best == 0)
+			if((heading - angleTolerance+360)%360 < placeList[index].angle &&
+				placeList[index].angle < (heading + angleTolerance+360)%360){
+				if(placeList[index].distance < placeList[best].distance || best == 0)
 					best = index;
 			}
 		}
+
+		//return callback(null, {reslist: reslist, placeList: placeList, best: best})
 
 		request.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeList[best].place_id}&key=${apiKey}`, (err, resp, body) => {
 			if(err) return callback(new Error(`Could not retrieve information for ${placeList[best].place_id}: ${err}`));
