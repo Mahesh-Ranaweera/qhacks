@@ -43,25 +43,25 @@ block content
             //start streaming service
             startStream();
 
-            //get device orientation
-            deviceOrient(function(req1){
-                console.log(req1);
-            });
+                //get device orientation
+                deviceOrient();
 
-             //getLocation
-            getDeviceLoc(function(req2){
-                var latt = req2.coords.latitude;
-                var long = req2.coords.longitude;
+            setInterval(function(){
+                //getLocation
+                getDeviceLoc(function(req2){
+                    var latt = req2.coords.latitude;
+                    var long = req2.coords.longitude;
 
-                var getGamma =  document.getElementById('direction').value;
-                console.log(getGamma);
+                    var getGamma =  document.getElementById('direction').value;
+                    console.log(getGamma);
 
-                var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getGamma}`;
+                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getGamma}`;
 
-                console.log(reqURL)
-                //- //request data
-                requestData(reqURL);
-            });
+                    console.log(reqURL)
+                    //- //request data
+                    requestData(reqURL);
+                });
+            }, 2000);
         };
 
         function startStream(){
