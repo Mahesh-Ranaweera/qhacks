@@ -48,14 +48,14 @@ block content
 
             //get device orientation
             deviceOrient(function(req1){
-                console.log(req1);
+                //console.log(req1);
                 //getLocation
                 getDeviceLoc(function(req2){
                     console.log()
                     var latt = req2.coords.latitude;
                     var long = req2.coords.longitude;
 
-                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${orientation.alpha}`;
+                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${req1.orientation.alpha}`;
 
                     //- //request data
                     requestData(reqURL);
@@ -98,31 +98,54 @@ block content
         }
 
         /**Get the device orientation*/
-        function deviceOrientationListener(event){
-            /**alpha z axis, beta x axis, gamma y axis*/
-            var curralpha = Math.round(event.alpha);
-            var currbeta  = Math.round(event.beta);
-            var currgamma = Math.round(event.gamma);
+        //- function deviceOrientationListener(event){
+        //-     /**alpha z axis, beta x axis, gamma y axis*/
+        //-     var curralpha = Math.round(event.alpha);
+        //-     var currbeta  = Math.round(event.beta);
+        //-     var currgamma = Math.round(event.gamma);
 
-            document.getElementById('tiltLR').innerHTML = curralpha;
-            document.getElementById('tiltFB').innerHTML = currbeta;
-            document.getElementById('direction').innerHTML = currgamma;
+        //-     document.getElementById('tiltLR').innerHTML = curralpha;
+        //-     document.getElementById('tiltFB').innerHTML = currbeta;
+        //-     document.getElementById('direction').innerHTML = currgamma;
 
-            orientation = {
-                alpha: curralpha,
-                beta : currbeta,
-                gamma: currgamma
-            }
-        }
+        //-     orientation = {
+        //-         alpha: curralpha,
+        //-         beta : currbeta,
+        //-         gamma: currgamma
+        //-     }
+        //- }
 
         function deviceOrient(callback){
             if(window.DeviceOrientationEvent){
-                window.addEventListener("deviceorientation", deviceOrientationListener);
-                callback();
+                window.addEventListener("deviceorientation", function(event){
+                
+                    var curralpha = Math.round(event.alpha);
+                    var currbeta  = Math.round(event.beta);
+                    var currgamma = Math.round(event.gamma);
+
+                    orientation = {
+                        alpha: curralpha,
+                        beta : currbeta,
+                        gamma: currgamma
+                    }
+
+                    handleOrientationEvent(curralpha, currbeta, currgamma);
+                }, true);
             }else{
                 alert('Device not support for device orientation');
             }
+
+            var handleOrientationEvent = function(curralpha, currbeta, currgamma) {
+                orientation = {
+                        alpha: curralpha,
+                        beta : currbeta,
+                        gamma: currgamma
+                }
+                callback(orientation);          
+            };
         }
+
+        
 
         /**Get the geolocation */
         function getCoordinates(location){
