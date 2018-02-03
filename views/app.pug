@@ -52,10 +52,11 @@ block content
                     var latt = req2.coords.latitude;
                     var long = req2.coords.longitude;
 
-                    var getGamma =  document.getElementById('direction').value;
+                    var getGamma = orientation.gamma;
                     console.log(getGamma);
 
                     var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getGamma}`;
+                    document.getElementById('direction').innerHTML = `${latt}; ${long}; ${getGamma}`;
 
                     console.log(reqURL)
                     //- //request data
@@ -98,7 +99,7 @@ block content
             });
         }
 
-        function deviceOrient(callback){
+        function deviceOrient(){
             if(window.DeviceOrientationEvent){
                 window.addEventListener("deviceorientation", function(event){
                 
@@ -108,7 +109,7 @@ block content
 
                     document.getElementById('tiltLR').innerHTML = curralpha;
                     document.getElementById('tiltFB').innerHTML = currbeta;
-                    document.getElementById('direction').value = currgamma;
+                    //document.getElementById('direction').value = currgamma;
 
                     orientation = {
                         alpha: curralpha,
@@ -128,7 +129,6 @@ block content
                         beta : currbeta,
                         gamma: currgamma
                 }
-                callback(orientation);          
             };
         }
 
