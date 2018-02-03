@@ -24,6 +24,13 @@ a {
     box-sizing: border-box;
 }
 
+.app-logo {
+    width: 100%;
+    height: auto;
+    float: left;
+    margin-bottom: 30px;
+}
+
 .video-container {
     margin: auto;
     top: 0;
@@ -96,4 +103,10 @@ video {
         width: 100%;
         height: auto;
     }
+}
+
+.card-width {
+    width: 90%;
+    max-width: 480px;
+    min-width: 300px;
 }

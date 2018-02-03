@@ -5,7 +5,8 @@ block content
     //-overlay
     //-.drawing-overlay
     .display-info-container
-        .uk-card.uk-card-body
+
+        .uk-card.uk-card-body.card-width
             #place
             #location
 
@@ -46,23 +47,22 @@ block content
                 //get device orientation
                 deviceOrient();
 
-            setInterval(function(){
+            //setInterval(function(){
                 //getLocation
                 getDeviceLoc(function(req2){
                     var latt = req2.coords.latitude;
                     var long = req2.coords.longitude;
 
-                    var getGamma = orientation.gamma;
+                    var getGamma =  document.getElementById('direction').value;
                     console.log(getGamma);
 
                     var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${getGamma}`;
-                    document.getElementById('direction').innerHTML = `${latt}; ${long}; ${getGamma}`;
 
                     console.log(reqURL)
                     //- //request data
                     requestData(reqURL);
                 });
-            }, 2000);
+            //}, 2000);
         };
 
         function startStream(){
@@ -99,9 +99,9 @@ block content
             });
         }
 
-        function deviceOrient(){
+        function deviceOrient(callback){
             if(window.DeviceOrientationEvent){
-                window.addEventListener("deviceorientation", function(event){
+                window.addEventListener("deviceorientation", function(event){0
                 
                     var curralpha = Math.round(event.alpha);
                     var currbeta  = Math.round(event.beta);
@@ -109,7 +109,7 @@ block content
 
                     document.getElementById('tiltLR').innerHTML = curralpha;
                     document.getElementById('tiltFB').innerHTML = currbeta;
-                    //document.getElementById('direction').value = currgamma;
+                    document.getElementById('direction').value = currgamma;
 
                     orientation = {
                         alpha: curralpha,
@@ -129,6 +129,7 @@ block content
                         beta : currbeta,
                         gamma: currgamma
                 }
+                callback(orientation);          
             };
         }
 
