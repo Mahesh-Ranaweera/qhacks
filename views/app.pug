@@ -50,32 +50,38 @@ block content
         }
 
         function startStream(){
-            var video = document.getElementById('video');
+            getStream ('video');
+        }
 
-            //-request access to camera
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
-                });
+        function getUserMedia(options, successCallback, failureCallback) {
+            var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia || navigator.msGetUserMedia;
+            if (api) {
+                return api.bind(navigator)(options, successCallback, failureCallback);
+            }
+        }
+
+        function getStream (type) {
+            if (!navigator.getUserMedia && !navigator.webkitGetUserMedia &&
+                !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
+                alert('User Media API not supported.');
+                return;
             }
 
-            else if(navigator.getUserMedia) { // Standard
-                navigator.getUserMedia({ video: true }, function(stream) {
-                    video.src = stream;
-                    video.play();
-                }, errBack);
-            } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-                navigator.webkitGetUserMedia({ video: true }, function(stream){
-                    video.src = window.webkitURL.createObjectURL(stream);
-                    video.play();
-                }, errBack);
-            } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
-                navigator.mozGetUserMedia({ video: true }, function(stream){
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
-                }, errBack);
-            }
+            var constraints = {};
+            constraints[type] = true;
+            getUserMedia(constraints, function (stream) {
+                var mediaControl = document.querySelector(type);
+                
+                if ('srcObject' in mediaControl) {
+                mediaControl.srcObject = stream;
+                mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);
+                } else if (navigator.mozGetUserMedia) {
+                mediaControl.mozSrcObject = stream;
+                }
+            }, function (err) {
+                alert('Error: ' + err);
+            });
         }
 
         function deviceOrientationListener(event){
