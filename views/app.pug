@@ -53,10 +53,13 @@ block content
             //start streaming service
             startStream();
 
-                //get device orientation
-                deviceOrient();
+            //get device orientation
+            deviceOrient();
 
             setInterval(function(){
+                //reset more section
+                more_txt.innerHTML = "";
+
                 //getLocation
                 getDeviceLoc(function(req2){
                     var latt = req2.coords.latitude;
@@ -199,29 +202,29 @@ block content
 
                     //more information content
                     if(data.result.opening_hours != null)
-                        more_txt.innerHTML += "<p>OPEN NOW: "+data.result.opening_hours.open_now+"</p><br>";
+                        more_txt.innerHTML += "<p>OPEN NOW: "+data.result.opening_hours.open_now+"</p>";
 
                     if(data.result.price_level != null)
 
                         switch(data.result.price_level){
                             case 0:
-                                more_txt.innerHTML += "<p>PRICE LEVEL: FREE</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: FREE</p>";
                                 break;
 
                             case 1:
-                                more_txt.innerHTML += "<p>PRICE LEVEL: Inexpensive</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Inexpensive</p>";
                                 break;
 
                             case 2:
-                                more_txt.innerHTML += "<p>PRICE LEVEL: Moderate</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Moderate</p>";
                                 break;
                             
                             case 3:
-                                more_txt.innerHTML += "<p>PRICE LEVEL: Expensive</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Expensive</p>";
                                 break;
 
                             case 4:
-                                more_txt.innerHTML += "<p>PRICE LEVEL: Very Expensive</p><br>";
+                                more_txt.innerHTML += "<p>PRICE LEVEL: Very Expensive</p>";
                                 break;
 
                             default:
