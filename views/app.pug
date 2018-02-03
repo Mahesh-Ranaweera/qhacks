@@ -119,7 +119,7 @@ block content
                 window.addEventListener("deviceorientation", deviceOrientationListener);
                 callback();
             }else{
-                console.log('Device not support for device orientation');
+                alert('Device not support for device orientation');
             }
         }
 
@@ -143,7 +143,7 @@ block content
                     callback(location);
                 })
             }else{
-                console.log('Geolocation not supported');
+                alert('Geolocation not supported');
             }
         }
 
