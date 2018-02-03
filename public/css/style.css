@@ -45,15 +45,18 @@ a {
 }
 
 .display-info-container {
-    width: 100%;
+    width: 300px;
     height: auto;
     float: left;
-    position: inherit;
+    position: fixed;
     margin-bottom: 60px;
     bottom: 0;
     left: 0;
     right: 0;
+    margin-left: auto;
+    margin-right: auto;
     background-color: white;
+    z-index: 10000;
 }
 
 video {
