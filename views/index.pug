@@ -26,12 +26,12 @@ block content
     script.
 
         function deviceOrientationListener(event){
+            /**alpha z axis, beta x axis, gamma y axis*/
             var curralpha = Math.round(event.alpha);
             var currbeta  = Math.round(event.beta);
             var currgamma = Math.round(event.gamma);
 
             /**Converting deg ot rad*/
-            /**alpha z axis, beta x axis, gamma y axis*/
             var alphaRadian = curralpha*(Math.PI / 180);
             var betaRadian  = currbeta*(Math.PI / 180);
             var gammaRadian = currgamma*(Math.PI / 180); 
@@ -62,9 +62,9 @@ block content
             // Convert radians to degrees
             compassHeading *= 180 / Math.PI;
 
-            document.getElementById('tiltLR').innerHTML = alphaRadian;
-            document.getElementById('tiltFB').innerHTML = betaRadian;
-            document.getElementById('direction').innerHTML = gammaRadian;
+            document.getElementById('tiltLR').innerHTML = curralpha;
+            document.getElementById('tiltFB').innerHTML = currbeta;
+            document.getElementById('direction').innerHTML = currgamma;
             document.getElementById('compassH').innerHTML = compassHeading;
         }
 
