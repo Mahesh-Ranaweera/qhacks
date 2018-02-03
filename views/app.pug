@@ -199,8 +199,12 @@ block content
                     more_txt.innerHTML = "";
 
                     //more information content
-                    if(data.result.opening_hours != null)
-                        more_txt.innerHTML += "<p>OPEN NOW: "+data.result.opening_hours.open_now+"</p>";
+                    if(data.result.opening_hours != null){
+                        if(data.result.opening_hours.open_now)
+                            more_txt.innerHTML += "<p>OPEN NOW</p>";
+                        else    
+                            more_txt.innerHTML += "<p>CLOSE NOW</p>";
+                    }
 
                     if(data.result.price_level != null)
 
