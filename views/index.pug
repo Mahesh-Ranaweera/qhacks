@@ -24,16 +24,12 @@ block content
 
     script.
 
-        function deviceOrientationListener(event){
-            var curralpha = Math.round(event.alpha);
-            var currbeta  = Math.round(event.beta);
-            var currgamma = Math.round(event.gamma);
+        function compassHeading(alpha, beta, gamma) {
 
-            /**Converting deg ot rad*/
-            /**alpha z axis, beta x axis, gamma y axis*/
-            var alphaRadian = curralpha*(Math.PI / 180);
-            var betaRadian  = currbeta*(Math.PI / 180);
-            var gammaRadian = currgamma*(Math.PI / 180); 
+            // Convert degrees to radians
+            var alphaRad = alpha * (Math.PI / 180);
+            var betaRad = beta * (Math.PI / 180);
+            var gammaRad = gamma * (Math.PI / 180);
 
             // Calculate equation components
             var cA = Math.cos(alphaRad);
@@ -61,17 +57,21 @@ block content
             // Convert radians to degrees
             compassHeading *= 180 / Math.PI;
 
-            document.getElementById('tiltLR').innerHTML = alphaRadian;
-            document.getElementById('tiltFB').innerHTML = betaRadian;
-            document.getElementById('direction').innerHTML = gammaRadian;
-            document.getElementById('compassH').innerHTML = compassHeading;
+            return compassHeading;
+
         }
 
-        if(window.DeviceOrientationEvent){
-            window.addEventListener("deviceorientation", deviceOrientationListener);
-        }else{
-            alert("error not supported");
-        }
+        window.addEventListener('deviceorientation', function(evt) {
+
+            var heading = null;
+
+            if(evt.absolute === true && evt.alpha !== null) {
+                heading = compassHeading(evt.alpha, evt.beta, evt.gamma);
+            }
+
+            document.getElementById('compassH').innerHTML = heading;
+
+        }, false);
 
 
         var video = document.getElementById('video');
