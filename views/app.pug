@@ -2,28 +2,30 @@ extends layout
 
 block content
 
-    #tiltLR
-        | nodata
+    //- #tiltLR
+    //-     | nodata
 
-    #tiltFB
-        | nodata
+    //- #tiltFB
+    //-     | nodata
 
-    #direction
-        | nodata
+    //- #direction
+    //-     | nodata
 
-    #compassH
-        | nodata
+    //- #compassH
+    //-     | nodata
 
 
     //-camera test
-    video#video(width="640" height="480" autoplay)
+    video#video(width="100%" height="100%" autoplay)
 
-    canvas#canvas(width="640" height="480")
+    canvas#canvas(width="800" height="480")
 
 
     script.
         /**initialize the background size**/
-        window.onload = function(){
+        window.onload = setup();
+        
+        function setup(){
             //setup the canvas 
             setupCanvas();
 
@@ -33,8 +35,16 @@ block content
 
         function setupCanvas(){
             var canvas = document.getElementById('canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            var video = document.getElementById('video');
+            divWidth = window.innerWidth;
+            divHeight = window.innerHeight;
+
+            console.log(divWidth, divHeight)
+
+            canvas.style.width, video.style.width = divWidth;
+            canvas.style.height, video.style.height = divHeight;
+
+            console.log(canvas.style.width, canvas.style.height)
         }
 
         function startStream(){
@@ -55,9 +65,9 @@ block content
             var currbeta  = Math.round(event.beta);
             var currgamma = Math.round(event.gamma);
 
-            document.getElementById('tiltLR').innerHTML = curralpha;
-            document.getElementById('tiltFB').innerHTML = currbeta;
-            document.getElementById('direction').innerHTML = currgamma;
+            //- document.getElementById('tiltLR').innerHTML = curralpha;
+            //- document.getElementById('tiltFB').innerHTML = currbeta;
+            //- document.getElementById('direction').innerHTML = currgamma;
         }
 
         if(window.DeviceOrientationEvent){

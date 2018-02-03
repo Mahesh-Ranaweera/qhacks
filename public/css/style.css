@@ -22,3 +22,7 @@ a {
     padding: 4px;
     box-sizing: border-box;
 }
+
+#canvas {
+    display: none;
+}
