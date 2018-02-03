@@ -57,8 +57,6 @@ block content
             deviceOrient();
 
             setInterval(function(){
-                //reset more section
-                more_txt.innerHTML = "";
 
                 //getLocation
                 getDeviceLoc(function(req2){
@@ -198,7 +196,7 @@ block content
                     location_txt.innerHTML = "Location: "+data.result.formatted_address;
                     place_txt.innerHTML = "<b>Name: "+data.result.name + '</b>';
 
-                    more_txt.innerHTML += "";
+                    more_txt.innerHTML = "";
 
                     //more information content
                     if(data.result.opening_hours != null)
