@@ -1,29 +1,47 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    p Welcome to #{title}
 
-  #tiltLR
-    | nodata
+     #tiltLR
+        | nodata
 
-  #tiltFB
-    | nodata
+    #tiltFB
+        | nodata
 
-  #direction
-    | nodata
+    #direction
+        | nodata
 
 
-  script.
+    //-camera test
+    video#video(width="640" height="480" autoplay)
 
-    function deviceOrientationListener(event){
-        document.getElementById('tiltLR').innerHTML = Math.round(event.alpha);
-        document.getElementById('tiltFB').innerHTML = Math.round(event.beta);
-        document.getElementById('direction').innerHTML = Math.round(event.gamma);
-    }
+    canvas#canvas(width="640" height="480")
 
-    if(window.DeviceOrientationEvent){
-        window.addEventListener("deviceorientation", deviceOrientationListener);
-    }else{
-        alert("error not supported");
-    }
+
+    script.
+
+        function deviceOrientationListener(event){
+            document.getElementById('tiltLR').innerHTML = Math.round(event.alpha);
+            document.getElementById('tiltFB').innerHTML = Math.round(event.beta);
+            document.getElementById('direction').innerHTML = Math.round(event.gamma);
+        }
+
+        if(window.DeviceOrientationEvent){
+            window.addEventListener("deviceorientation", deviceOrientationListener);
+        }else{
+            alert("error not supported");
+        }
+
+
+        var video = document.getElementById('video');
+
+        // Get access to the camera!
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Not adding `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.src = window.URL.createObjectURL(stream);
+                video.play();
+            });
+        }
