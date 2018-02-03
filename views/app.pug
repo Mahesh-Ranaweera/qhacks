@@ -4,9 +4,10 @@ block content
 
     //-overlay
     //-.drawing-overlay
-    .display-info-container
-
-        .uk-card.uk-card-body.card-width
+    .display-info-container.border-radius
+        button.uk-button.uk-button-primary.uk-width-1-1(uk-toggle='target: #more-info')
+            | More Info
+        .uk-card.uk-card-body.uk-margin-small
             #place
             #location
 
@@ -19,6 +20,12 @@ block content
             #direction
                 | nodata
 
+
+    #more-info(uk-modal)
+        .uk-modal-dialog.uk-modal-body.border-radius
+            button.uk-modal-close-deafault(type='button' uk-close)
+            #moredata
+
     //-camera
     .video-container
         video#video(width="100%" height="100%" autoplay)
@@ -29,6 +36,7 @@ block content
     script.
         var place_txt = document.getElementById('place');
         var location_txt = document.getElementById('location');
+        var more_txt = document.getElementById('moredata');
 
         /**initialize the background size**/
         window.onload = setup();
@@ -47,7 +55,7 @@ block content
                 //get device orientation
                 deviceOrient();
 
-            //setInterval(function(){
+            setInterval(function(){
                 //getLocation
                 getDeviceLoc(function(req2){
                     var latt = req2.coords.latitude;
@@ -63,7 +71,7 @@ block content
                     //- //request data
                     requestData(reqURL);
                 });
-            //}, 2000);
+            }, 3000);
         };
 
         function startStream(){
@@ -122,18 +130,9 @@ block content
             }
 
             var handleOrientationEvent = function(curralpha, currbeta, currgamma) {
-<<<<<<< HEAD
-                orientation = {
-                        alpha: curralpha,
-                        beta : currbeta,
-                        gamma: currgamma
-                }
-                callback(orientation);          
-=======
                 Orientation.alpha = curralpha;
                 Orientation.beta = currbeta;
                 Orientation.gamma = currgamma;
->>>>>>> 188c658148a8d686585ec09719cd373e73933f5d
             };
         }
 
@@ -185,12 +184,55 @@ block content
             var locData = new requestLocData();
             locData.get(reqURL, function(res){
                 var data = JSON.parse(res);
-                console.log(data.result)
-                console.log(data.result.formatted_address)
-                
 
-                location_txt.innerHTML = "Location: "+data.result.formatted_address;
-                place_txt.innerHTML = "<b>Name: "+data.result.name + '</b>';
+                if(data != null){
+                    console.log(data.result)
+                    console.log(data.result.formatted_address)
+                    
+
+                    location_txt.innerHTML = "Location: "+data.result.formatted_address;
+                    place_txt.innerHTML = "<b>Name: "+data.result.name + '</b>';
+
+                    place_txt.innerHTML += "";
+
+                    //more information content
+                    if(data.result.opening_hours != null)
+                        place_txt.innerHTML += "<p>OPEN NOW: "+data.result.opening_hours.open_now+"</p><br>";
+
+                    if(data.result.price_level != null)
+
+                        switch(data.result.price_level){
+                            case 0:
+                                place_txt.innerHTML += "<p>PRICE LEVEL: FREE</p><br>";
+                                break;
+
+                            case 1:
+                                place_txt.innerHTML += "<p>PRICE LEVEL: Inexpensive</p><br>";
+                                break;
+
+                            case 2:
+                                place_txt.innerHTML += "<p>PRICE LEVEL: Moderate</p><br>";
+                                break;
+                            
+                            case 3:
+                                place_txt.innerHTML += "<p>PRICE LEVEL: Expensive</p><br>";
+                                break;
+
+                            case 4:
+                                place_txt.innerHTML += "<p>PRICE LEVEL: Very Expensive</p><br>";
+                                break;
+
+                            default:
+                                place_txt.innerHTML += "<p>PRICE LEVEL: NO DATA AVAILABLE</p><br>";
+                                
+                        }
+
+                    if(data.result.rating != null){
+                        place_txt.innerHTML += "<p>RATING: "+data.result.rating+"</p><br>";
+                    }
+                }else{
+                    place_txt.innerHTML = "FAILED TO RETRIEVE LOCATION DATA";
+                }
             });
         }
 

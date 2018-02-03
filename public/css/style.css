@@ -52,7 +52,9 @@ a {
 }
 
 .display-info-container {
-    width: 300px;
+    width: 90% !important;
+    max-width: 480px !important;
+    min-width: 300px !important;
     height: auto;
     float: left;
     position: fixed;
@@ -64,6 +66,10 @@ a {
     margin-right: auto;
     background-color: white;
     z-index: 10000;
+}
+
+.border-radius {
+    border-radius: 2.5px;
 }
 
 video {
@@ -103,10 +109,4 @@ video {
         width: 100%;
         height: auto;
     }
-}
-
-.card-width {
-    width: 90%;
-    max-width: 480px;
-    min-width: 300px;
 }
