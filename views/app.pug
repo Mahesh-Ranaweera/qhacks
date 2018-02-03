@@ -6,8 +6,8 @@ block content
     //-.drawing-overlay
     .display-info-container
         .uk-card.uk-card-body
-            #location
             #place
+            #location
 
             #tiltLR
                 | nodata
@@ -29,6 +29,7 @@ block content
 
 
     script.
+        var place_txt = document.getElementById('place');
         var location_txt = document.getElementById('location');
 
         /**initialize the background size**/
@@ -172,6 +173,7 @@ block content
                 console.log(data.result)
 
                 location_txt.innerHTML = "Location: "+data.result.formatted_address;
+                place_txt.innerHTML = "<b>Name: "+data.result.name + '</b>';
             });
         }
 
