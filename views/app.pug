@@ -1,0 +1,55 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to #{title}
+
+     #tiltLR
+        | nodata
+
+    #tiltFB
+        | nodata
+
+    #direction
+        | nodata
+
+    #compassH
+        | nodata
+
+
+    //-camera test
+    video#video(width="640" height="480" autoplay)
+
+    canvas#canvas(width="640" height="480")
+
+
+    script.
+
+        function deviceOrientationListener(event){
+            /**alpha z axis, beta x axis, gamma y axis*/
+            var curralpha = Math.round(event.alpha);
+            var currbeta  = Math.round(event.beta);
+            var currgamma = Math.round(event.gamma);
+
+            document.getElementById('tiltLR').innerHTML = curralpha;
+            document.getElementById('tiltFB').innerHTML = currbeta;
+            document.getElementById('direction').innerHTML = currgamma;
+        }
+
+        if(window.DeviceOrientationEvent){
+            window.addEventListener("deviceorientation", deviceOrientationListener);
+        }else{
+            alert("error not supported");
+        }
+
+
+        var video = document.getElementById('video');
+
+        // Get access to the camera!
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Not adding `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.src = window.URL.createObjectURL(stream);
+                video.play();
+            });
+        }
