@@ -48,15 +48,15 @@ block content
 
             //get device orientation
             deviceOrient(function(req1){
-                //console.log(req1);
+                console.log(req1);
                 //getLocation
                 getDeviceLoc(function(req2){
-                    console.log()
                     var latt = req2.coords.latitude;
                     var long = req2.coords.longitude;
 
-                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${req1.orientation.alpha}`;
+                    var reqURL = `https://travismadill.stdlib.com/mapsproc@dev/?lat=${latt}&lng=${long}&heading=${req1.alpha}`;
 
+                    console.log(reqURL)
                     //- //request data
                     requestData(reqURL);
                 });
@@ -122,6 +122,10 @@ block content
                     var curralpha = Math.round(event.alpha);
                     var currbeta  = Math.round(event.beta);
                     var currgamma = Math.round(event.gamma);
+
+                    document.getElementById('tiltLR').innerHTML = curralpha;
+                    document.getElementById('tiltFB').innerHTML = currbeta;
+                    document.getElementById('direction').innerHTML = currgamma;
 
                     orientation = {
                         alpha: curralpha,
