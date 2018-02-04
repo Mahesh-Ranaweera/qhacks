@@ -1,22 +1,22 @@
-# GEOTUORIST
+# GeoTourist
 
-![Geotutor](https://github.com/Mahesh-Ranaweera/qhacks/blob/master/app_images/geotuor.png "Geotutor")
+![GeoTourist](https://github.com/Mahesh-Ranaweera/qhacks/blob/master/app_images/geotuor.png "Geotutor")
 
-- Found yourself in an unfamiliar place ?
-- Research about a business place.
-- Curious about what's around you ?
+Found yourself in an unfamiliar place? Don't know what the business you pass by every day actually does? Just curious about what's around you?
 
-Web app that uses device gyroscop, geolocation functionalities and stdlib for providing location services to the user. Based on the location and orientation of the device web app requests location details from Google Map Api through stdlib to construct a location profile for the user. Interface is minimal and easy to use. Simply point at a point of interest to find out location information. 
+GeoTutor is a web app that uses a mobile device's gyroscope and geolocation functionalities for providing location services to the user. Based on the location and direction the device is facing, GeoTourist requests location details from the Google Maps API through by using StdLib functions to construct a location profile for the user. Interface is minimal and easy to use.
+
+Simply point at a point of interest to find out what it's all about! 
 
 ## Getting started
 
-Simply navigate to [geotourist](https://geotourist.tech/) website on your mobile device
+Just navigate to [the GeoTourist website](https://geotourist.tech/) on your mobile device.
 
 ## Demo
 
-Simply navigate to [YouTube](https://www.youtube.com/watch?v=aJ8B0QjJwpM)
+Check out [this YouTube video](https://www.youtube.com/watch?v=aJ8B0QjJwpM).
 
 ## Authors
    
-   * **Travis Madill** - [Travis Madill](https://github.com/TravisMadill)
-   * **Mahesh Ranaweera** - [Mahesh Ranaweera](https://github.com/Mahesh-Ranaweera)
+   * **Travis Madill** ([Github profile](https://github.com/TravisMadill))
+   * **Mahesh Ranaweera** - ([Github profile](https://github.com/Mahesh-Ranaweera))
