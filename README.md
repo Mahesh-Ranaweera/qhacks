@@ -1,5 +1,6 @@
 # GEOTUORIST
 
+![Geotutor](https://github.com/Mahesh-Ranaweera/qhacks/blob/master/app_images/geotuor.png "Geotutor")
 
 - Found yourself in an unfamiliar place ?
 - Research about a business place.
@@ -16,6 +17,6 @@ Simply navigate to [geotourist](https://geotourist.tech/) website on your mobile
 Simply navigate to [YouTube](https://www.youtube.com/watch?v=aJ8B0QjJwpM)
 
 ## Authors
-
-    * **Travis Madill** - [Travis Madill](https://github.com/TravisMadill)
-    * **Mahesh Ranaweera** - [Mahesh Ranaweera](https://github.com/Mahesh-Ranaweera)
+   
+   * **Travis Madill** - [Travis Madill](https://github.com/TravisMadill)
+   * **Mahesh Ranaweera** - [Mahesh Ranaweera](https://github.com/Mahesh-Ranaweera)
