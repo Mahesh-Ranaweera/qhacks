@@ -4,6 +4,7 @@ const lib = require('lib');
 const request = require('request')
 
 var apiKey = 'AIzaSyAg9XLgcTbHCBxlMAKlQWTi_t_DowldU_g';
+//var apiKey = 'AIzaSyALYjjdReiDgH1TuUkfUXs-L4q_jsYqWtc';
 var angleTolerance = 15.0;
 
 /** Extend Number object with method to convert numeric degrees to radians */
