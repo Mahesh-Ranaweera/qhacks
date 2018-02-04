@@ -12,7 +12,9 @@ a {
 /**app window**/
 
 .floating-app {
-    width: 300px;
+    min-width: 300px;
+    max-width: 480px;
+    width: 90%;
     height: 480px;
     position: fixed;
     left: 0;
